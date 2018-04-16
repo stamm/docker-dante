@@ -1,0 +1,8 @@
+version: "3"
+services:
+  sockd:
+    build: .
+    env_file: socks.env
+    ports:
+     - "8088:8088"
+    restart: always

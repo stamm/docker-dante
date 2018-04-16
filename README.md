@@ -1,14 +1,6 @@
-Create Dockerfile:
-```
-FROM stamm/docker-dante:0.5
-```
+Put SOCKS_USERNAME and SOCKS_PASSWORD into file socks.env.
 
-Build image with set username and password:
-`docker build --build-arg username=secureuser --build-arg password=mypa$$word -t dante .`
-
-
-
-Run docker: `docker run -d --name='socks_server' -p 8088:8088 dante`
+Run docker: `docker run -d --env-file=socks.env --name='socks_server' -p 8088:8088 stamm/docker-dante:1.0`
 
 or with docker-compose:
 
@@ -16,13 +8,11 @@ or with docker-compose:
 version: "3"
 services:
   sockd:
-    build:
-      context: .
-      args:
-        username: secureuser
-        password: mypa$$word
+    image: stamm/docker-dante:1.0
+    env_file: socks.env
     ports:
      - "8088:8088"
+    restart: always
 ```
 
-`docker-compose up --build`
+`docker-compose up`
